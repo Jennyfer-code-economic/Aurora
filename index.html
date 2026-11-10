@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Aurora</title>
+<link rel="manifest" href="manifest.json">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+.timer-container{
+
+    text-align:center;
+
+    margin-top:25px;
+}
+
+#timer{
+
+    font-size:48px;
+
+    font-weight:300;
+
+    color:#222;
+
+    margin-top:10px;
+}
+
+#timerStatus{
+
+    color:#888;
+
+    margin-top:10px;
+
+    font-size:14px;
+}
+
+:root{
+    --bg:#f4f3f1;
+    --card:#f8f7f5;
+    --text:#222;
+    --sub:#9b9b9b;
+    --shadow-dark:#dddddd;
+    --shadow-light:#ffffff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:var(--bg);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+}
+
+.card{
+    background:var(--card);
+    border-radius:40px;
+    padding:30px;
+    box-shadow:
+    12px 12px 30px var(--shadow-dark),
+    -12px -12px 30px var(--shadow-light);
+}
+
+.logo{
+    text-align:center;
+}
+
+.logo h1{
+    letter-spacing:4px;
+    font-weight:500;
+}
+
+.logo p{
+    margin-top:5px;
+    color:var(--sub);
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    margin-top:25px;
+    margin-bottom:25px;
+}
+
+.tab{
+    flex:1;
+    border:none;
+    padding:12px;
+    border-radius:15px;
+    cursor:pointer;
+    background:#e9e7e3;
+    color:#555;
+}
+
+.tab.active{
+    background:#17171c;
+    color:white;
+}
+
+.tempo{
+    text-align:center;
+    margin-top:20px;
+}
+
+.tempo h2{
+    font-size:52px;
+    font-weight:300;
+}
+
+.tempo p{
+    color:var(--sub);
+}
+
+.divisor{
+    width:60px;
+    height:1px;
+    background:#ddd;
+    margin:30px auto;
+}
+
+.objetivo{
+    text-align:center;
+}
+
+.objetivo small{
+    letter-spacing:3px;
+    color:var(--sub);
+}
+
+.objetivo h3{
+    margin-top:10px;
+    font-size:38px;
+    font-weight:500;
+}
+
+.objetivo p{
+    margin-top:10px;
+    color:var(--sub);
+}
+
+.botao-area{
+    display:flex;
+    justify-content:center;
+    margin-top:25px;
+}
+
+.botao{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:none;
+    background:#17171c;
+    color:white;
+    cursor:pointer;
+}
+
+.foto{
+    margin-top:35px;
+}
+
+.foto img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:25px;
+}
+
+.frase{
+    text-align:center;
+    margin-top:20px;
+    color:#666;
+    line-height:1.8;
+}
+
+.info{
+    text-align:center;
+    margin-top:20px;
+    color:#888;
+    font-size:13px;
+}
+
+.agenda{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.dia{
+    background:#efede9;
+    padding:15px;
+    border-radius:18px;
+}
+
+.dia h4{
+    margin-bottom:8px;
+}
+
+.dia p{
+    color:#666;
+    margin-bottom:4px;
+}
+
+.campo{
+
+    width:100%;
+
+    margin-top:10px;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    background:#efede9;
+}
+
+.btnAdicionar{
+
+    width:100%;
+
+    margin-top:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:12px;
+
+    background:#17171c;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+.projeto{
+
+    margin-top:10px;
+
+    padding:12px;
+
+    background:#efede9;
+
+    border-radius:12px;
+}
+
+.atividade{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:8px;
+
+    padding:10px;
+
+    background:white;
+
+    border-radius:10px;
+
+    font-size:14px;
+}
+
+.atividade button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    color:#d11a2a;
+}
+
+.atividadeExtra{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:white;
+
+    padding:8px;
+
+    margin-top:8px;
+
+    border-radius:10px;
+}
+
+.atividadeExtra button{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    color:#cc0000;
+}
+
+#atividadesHoje{
+
+    margin-top:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.itemHoje{
+
+    background:#efede9;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    font-size:14px;
+}
+
+.dataHoje{
+    margin-top:10px;
+    color:#777;
+    font-size:14px;
+}
+
+.capacidadeCard{
+
+    background:#efede9;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+}
+
+.capacidadeItem{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:8px;
+}
+
+.capacidadeSobra{
+
+    margin-top:15px;
+
+    font-weight:bold;
+
+    font-size:18px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <!-- TOPO -->
+            <div class="logo">
+                <h1>AURORA</h1>
+                <p>uma prioridade de cada vez</p>
+                <div id="dataHoje"></div>
+            </div>
+
+            <!-- ABAS -->
+            <div class="tabs">
+
+                <button class="tab active"
+                        id="btnHoje"
+                        onclick="mostrarHoje()">
+                    Hoje
+                </button>
+
+                <button class="tab"
+                        id="btnSemana"
+                        onclick="mostrarSemana()">
+                    Semana
+                </button>
+
+                <button class="tab"
+                        id="btnPlanejamento"
+                        onclick="mostrarPlanejamento()">
+                    Planejamento
+                </button>
+
+            </div>
+            
+            <!-- ===================== -->
+            <!-- TELA HOJE -->
+            <!-- ===================== -->
+
+            <div id="telaHoje">
+
+            <div class="tempo">
+
+                <h2 id="tempoLivre">2h10</h2>
+
+                <p>tempo disponível hoje</p>
+
+            </div>
+
+            <div class="divisor"></div>
+
+            <div class="objetivo">
+
+                <small>FOCO DE HOJE</small>
+
+                <h3 id="objetivoPrincipal">
+                  
+                </h3>
+
+                <p id="tempoMeta">
+                </p>
+
+            </div>
+            <div id="atividadesHoje"></div>
+            <div class="botao-area">
+
+                <button class="botao"
+                        onclick="iniciarTimer()">
+
+                    INICIAR
+
+                </button>
+
+            </div>
+
+            <div class="timer-container">
+
+                <div id="timer">
+                    45:00
+                </div>
+
+                <div id="timerStatus">
+                    Pronto para começar
+                </div>
+
+            </div>
+
+            <div class="foto">
+
+                <img
+                    src="fotos/Inglaterra.jpg"
+                    alt="Memória do dia">
+
+            </div>
+
+            <div class="frase">
+
+                A pessoa que você deseja se tornar
+                está sendo construída pelas pequenas
+                decisões que toma hoje.
+
+            </div>
+
+            <div class="info">
+
+                Sono: 7h20<br>
+                Tempo livre real: 2h10
+
+            </div>
+
+        </div>  
+
+        <!-- ===================== -->
+        <!-- TELA SEMANA -->
+        <!-- ===================== -->
+
+        <div id="telaSemana"style="display:none;">
+
+          <div class="layoutSemana"></div>
+
+                <div class="capacidadeCard">
+
+                    <!-- COLUNA ESQUERDA -->
+                    <div class="colunaCapacidade">
+
+                        <div class="capacidadeCard">
+                            <h3>Capacidade do Dia</h3>
+
+                                <div id="capacidadeResumo"></div>
+
+                            </div>
+
+                        </div>    
+
+                    </div>               
+
+                    <!-- COLUNA DIREITA -->
+                    <div class="colunaAgenda"> 
+
+                        <div class="agenda">
+
+                            <div class="dia">
+                                <h4>Segunda</h4>
+                                <div id="segundaLista">
+                                    <p>🏫 Faculdade FMU</p>
+                                </div>
+                            </div>
+
+                            <div class="dia">
+                                <h4>Terça</h4>
+                                <div id="tercaLista"></div>
+                            </div>
+
+                            <div class="dia">
+                                <h4>Quarta</h4>
+                                <div id="quartaLista"></div>
+                            </div>
+
+                            <div class="dia">
+                                <h4>Quinta</h4>
+                                <div id="quintaLista"></div>
+                            </div>
+
+                            <div class="dia">
+                                <h4>Sexta</h4>
+                                <div id="sextaLista"></div>
+                            </div>
+
+                            <div class="dia">
+                                <h4>Sábado</h4>
+                                <div id="sabadoLista"></div>
+                            </div>
+
+                            <div class="dia">
+                                <h4>Domingo</h4>
+                                <div id="domingoLista"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                
+            </div>
+            
+        </div>    
+
+        <!-- ===================== -->
+        <!-- TELA PLANEJAMENTO -->
+        <!-- ===================== -->
+
+        <div id="telaPlanejamento"
+             style="display:none;">
+
+            <h3>Nova Atividade</h3>
+
+            <input
+                id="nomeProjeto"
+                class="campo"
+                placeholder="Nome">
+
+            <select
+                id="diaProjeto"
+                class="campo">
+
+                <option value="segunda">Segunda</option>
+                <option value="terca">Terça</option>
+                <option value="quarta">Quarta</option>
+                <option value="quinta">Quinta</option>
+                <option value="sexta">Sexta</option>
+                <option value="sabado">Sábado</option>
+                <option value="domingo">Domingo</option>
+
+            </select>
+
+            <input
+                id="tempoProjeto"
+                class="campo"
+                type="number"
+                placeholder="Minutos">
+
+            <button
+                class="btnAdicionar"
+                onclick="adicionarProjeto()">
+
+                Adicionar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+// ==========================================
+// ABAS
+// ==========================================
+
+let tempoRestante = 0;
+
+let intervalo = null;
+
+let timerRodando = false;
+
+let atividadeAtual = null;
+
+function atualizarTimer(){
+
+    const minutos =
+        Math.floor(
+            tempoRestante / 60
+        );
+
+    const segundos =
+        tempoRestante % 60;
+
+    document.getElementById(
+        "timer"
+    ).innerText =
+
+        `${String(minutos).padStart(2,"0")}:${String(segundos).padStart(2,"0")}`;
+
+}
+
+function iniciarTimer(){
+
+    if(!atividadeAtual){
+
+        alert(
+            "Nenhuma atividade para hoje."
+        );
+
+        return;
+    }
+
+    if(timerRodando){
+
+        clearInterval(intervalo);
+
+        timerRodando = false;
+
+        document.querySelector(".botao")
+            .innerText = "RETOMAR";
+
+        return;
+    }
+
+    timerRodando = true;
+
+    document.querySelector(".botao")
+        .innerText = "PARAR";
+
+    intervalo = setInterval(() => {
+
+        tempoRestante--;
+
+        atualizarTimer();
+
+        if(tempoRestante <= 0){
+
+            clearInterval(intervalo);
+
+            timerRodando = false;
+
+            document.querySelector(".botao")
+                .innerText =
+                "CONCLUÍDO ✓";
+
+            document.getElementById(
+                "timerStatus"
+            ).innerText =
+            "Atividade concluída";
+
+        }
+
+    },1000);
+
+}
+
+function mostrarHoje(){
+
+    telaHoje.style.display = "block";
+    telaSemana.style.display = "none";
+    telaPlanejamento.style.display = "none";
+
+}
+
+function obterDataAtual(){
+
+    const agora = new Date();
+
+    const dias = [
+        "Domingo",
+        "Segunda-feira",
+        "Terça-feira",
+        "Quarta-feira",
+        "Quinta-feira",
+        "Sexta-feira",
+        "Sábado"
+    ];
+
+    const meses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ];
+
+    return `${dias[agora.getDay()]}, ${agora.getDate()} de ${meses[agora.getMonth()]}`;
+
+}
+
+function mostrarSemana(){
+
+    telaHoje.style.display = "none";
+    telaSemana.style.display = "block";
+    telaPlanejamento.style.display = "none";
+
+}
+
+function mostrarPlanejamento(){
+
+    telaHoje.style.display = "none";
+    telaSemana.style.display = "none";
+    telaPlanejamento.style.display = "block";
+
+}
+
+// ==========================================
+// ATIVIDADES
+// ==========================================
+
+let atividades =
+JSON.parse(
+    localStorage.getItem("atividades")
+) || [];
+
+const manutencoes = {
+
+    sono: 480,
+
+    trabalho: 540,
+
+    alimentacao: 45,
+
+    banho: 15,
+
+    cabelo: 85,
+
+    academia: 90,
+
+    unha: 60,
+
+    descanso: 60
+
+};
+// ==========================================
+// ADICIONAR
+// ==========================================
+function calcularCapacidadeDia(){
+
+    let totalDia = 24 * 60;
+
+    let consumo = 0;
+
+    consumo += manutencoes.sono;
+    consumo += manutencoes.trabalho;
+    consumo += manutencoes.alimentacao;
+    consumo += manutencoes.banho;
+    consumo += manutencoes.descanso;
+
+    const sobra =
+        totalDia - consumo;
+
+    return {
+
+        totalDia,
+        consumo,
+        sobra
+
+    };
+
+}
+
+function adicionarProjeto(){
+
+    const nome =
+        document.getElementById(
+            "nomeProjeto"
+        ).value;
+
+    const dia =
+        document.getElementById(
+            "diaProjeto"
+        ).value;
+
+    const minutos =
+        document.getElementById(
+            "tempoProjeto"
+        ).value;
+
+    if(!nome){
+        return;
+    }
+
+    atividades.push({
+
+        nome,
+        dia,
+        minutos
+
+    });
+
+    localStorage.setItem(
+        "atividades",
+        JSON.stringify(
+            atividades
+        )
+    );
+
+    document.getElementById(
+        "nomeProjeto"
+    ).value = "";
+
+    document.getElementById(
+        "tempoProjeto"
+    ).value = "";
+
+    renderizarSemana();
+}
+
+// ==========================================
+// RENDERIZAR
+// ==========================================
+
+function renderizarSemana(){
+
+    const dias = [
+
+        "segunda",
+        "terca",
+        "quarta",
+        "quinta",
+        "sexta",
+        "sabado",
+        "domingo"
+
+    ];
+
+    dias.forEach(dia => {
+
+        const lista =
+            document.getElementById(
+                dia + "Lista"
+            );
+
+        lista.innerHTML = "";
+
+    });
+
+    atividades.forEach((item,index)=>{
+
+        const lista =
+
+        document.getElementById(
+            item.dia + "Lista"
+        );
+
+        lista.innerHTML += `
+
+            <div class="atividadeExtra">
+
+                ✅ ${item.nome}
+                (${item.minutos} min)
+
+                <button
+                onclick="removerProjeto(${index})">
+
+                    ✖
+
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+function renderizarCapacidade(){
+
+   console.log("renderizarCapacidade executou"); 
+
+   const dados =
+        calcularCapacidadeDia();
+
+    document.getElementById(
+        "capacidadeResumo"
+    ).innerHTML = `
+
+        <div class="capacidadeItem">
+
+            <span>Sono</span>
+
+            <span>8h</span>
+
+        </div>
+
+        <div class="capacidadeItem">
+
+            <span>Trabalho</span>
+
+            <span>9h</span>
+
+        </div>
+
+        <div class="capacidadeItem">
+
+            <span>Alimentação</span>
+
+            <span>45min</span>
+
+        </div>
+
+        <div class="capacidadeItem">
+
+            <span>Banho</span>
+
+            <span>15min</span>
+
+        </div>
+
+        <div class="capacidadeItem">
+
+            <span>Descanso</span>
+
+            <span>1h</span>
+
+        </div>
+
+        <div class="capacidadeSobra">
+
+            Tempo produtivo:
+            ${Math.floor(dados.sobra/60)}h
+            ${dados.sobra%60}m
+
+        </div>
+
+    `;
+}
+
+// ==========================================
+// REMOVER
+// ==========================================
+
+function removerProjeto(index){
+
+    atividades.splice(index,1);
+
+    localStorage.setItem(
+        "atividades",
+        JSON.stringify(
+            atividades
+        )
+    );
+
+    renderizarSemana();
+    atualizarTelaHoje();
+
+}
+
+
+function obterDiaAtual(){
+
+    const dias = [
+
+        "domingo",
+        "segunda",
+        "terca",
+        "quarta",
+        "quinta",
+        "sexta",
+        "sabado"
+
+    ];
+
+    return dias[
+        new Date().getDay()
+    ];
+
+}
+
+function atualizarTelaHoje(){
+
+    const hoje =
+        obterDiaAtual();
+
+    const atividadesDoDia =
+
+        atividades.filter(
+
+            a => a.dia === hoje
+
+        );
+
+    const foco =
+
+        document.getElementById(
+            "objetivoPrincipal"
+        );
+
+    const lista =
+
+        document.getElementById(
+            "atividadesHoje"
+        );
+
+    lista.innerHTML = "";
+
+    if(atividadesDoDia.length === 0){
+
+        foco.innerText =
+        "Livre";
+
+        lista.innerHTML =
+        "<div class='itemHoje'>Nenhuma atividade planejada.</div>";
+
+        return;
+    }
+
+    atividadeAtual =
+        atividadesDoDia[0];
+
+    foco.innerText =
+        atividadeAtual.nome;
+
+    tempoRestante =
+        parseInt(
+            atividadeAtual.minutos
+        ) * 60;
+
+    atualizarTimer();
+
+    atividadesDoDia.forEach(item => {
+
+        lista.innerHTML += `
+
+            <div class="itemHoje">
+
+                ✅ ${item.nome}
+                (${item.minutos} min)
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+// ==========================================
+
+// ==========================================
+
+renderizarSemana();
+
+document.getElementById(
+    "dataHoje"
+).innerText = obterDataAtual();
+
+atualizarTelaHoje();
+
+renderizarCapacidade();
+
+// ==========================================
+// ==========================================
+
+</script>
+
+</body>
+</html>
