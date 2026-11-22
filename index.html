@@ -378,6 +378,45 @@ body{
 }
 
 
+
+/* ==============================
+   AURORA — VISÃO MENSAL
+   ============================== */
+.mesTopo{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.mesTopo h2{font-size:22px;font-weight:500}
+.mesNavegacao{display:flex;gap:8px}
+.mesNavegacao button{border:0;background:#e9e7e3;border-radius:12px;width:38px;height:38px;cursor:pointer;font-size:18px}
+.resumoMes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.cardResumoMes{background:#efede9;border-radius:16px;padding:13px}
+.cardResumoMes span{display:block;color:#888;font-size:11px;letter-spacing:1px}
+.cardResumoMes strong{display:block;margin-top:5px;font-size:18px;font-weight:500}
+.calendario{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;width:100%;}
+.cabecalhoCalendario{font-size:11px;font-weight:600;color:#777;text-align:center;padding:8px 0;min-width:0;display:block}
+.diaCalendario{min-height:72px;border:1px solid #e7e4df;background:#f8f7f5;border-radius:12px;padding:8px;cursor:pointer;position:relative;display:block;min-width:0;overflow:hidden}
+.diaCalendario:hover{transform:translateY(-1px)}
+.diaCalendario.vazio{background:transparent;border:0;cursor:default}
+.diaCalendario.hoje{box-shadow:inset 0 0 0 2px #17171c}
+.numeroDia{display:block;font-size:15px;font-weight:600;line-height:1.2;color:#222;min-height:18px}
+.statusDia{font-size:13px;margin-top:5px;line-height:1}
+.saldoDia{font-size:10px;color:#777;margin-top:5px;white-space:nowrap}
+.diaLivre{background:#f3f7f2}
+.diaAtencao{background:#faf6ec}
+.diaLotado{background:#f9eeee}
+.diaExcesso{background:#f7e6e6}
+.analiseDia{margin-top:16px;background:#efede9;border-radius:18px;padding:18px}
+.analiseDia h3{font-size:17px;font-weight:500}
+.statusTexto{margin:8px 0 14px;font-size:13px;color:#666}
+.analiseGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.analiseItem{background:#f8f7f5;border-radius:12px;padding:10px}
+.analiseItem span{display:block;font-size:10px;color:#888}
+.analiseItem strong{display:block;margin-top:4px;font-size:14px}
+.listaAnalise{margin-top:14px}
+.listaAnalise div{background:#fff;border-radius:10px;padding:9px;margin-top:7px;font-size:13px}
+.recomendacaoAurora{margin-top:14px;padding:12px;border-radius:12px;background:#17171c;color:#fff;font-size:13px;line-height:1.5}
+.mensagemVazia{color:#777;font-size:13px;text-align:center;padding:14px}
+@media(max-width:430px){.analiseGrid{grid-template-columns:1fr 1fr}.calendario{gap:4px}.cabecalhoCalendario{font-size:10px}.diaCalendario{min-height:64px;padding:6px}.numeroDia{font-size:14px}.saldoDia{font-size:9px}}
+
+.blocoPlanejamento{background:#efede9;border-radius:18px;padding:18px;margin-bottom:18px}.subtitulo{color:#777;font-size:13px;margin:6px 0 14px}.configGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rotulo{display:block;font-size:12px;color:#777;margin:4px 0}.diasFixos{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.diasFixos label,.checkFixo{background:#fff;padding:9px 11px;border-radius:10px;font-size:13px;color:#555;cursor:pointer}.diasFixos input,.checkFixo input{margin-right:5px}.avisoFixo{font-size:12px;color:#777;margin-top:10px;line-height:1.5}.checkFixo{display:block;margin-top:10px}@media(max-width:480px){.configGrid{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -395,30 +434,15 @@ body{
             </div>
 
             <!-- ABAS -->
-            <div class="tabs">
+<div class="tabs">
+    <button class="tab active" id="btnHoje" onclick="mostrarHoje()">Hoje</button>
+    <button class="tab" id="btnSemana" onclick="mostrarSemana()">Semana</button>
+    <button class="tab" id="btnMes" onclick="mostrarMes()">Mês</button>
+    <button class="tab" id="btnPlanejamento" onclick="mostrarPlanejamento()">Planejamento</button>
+</div>
 
-                <button class="tab active"
-                        id="btnHoje"
-                        onclick="mostrarHoje()">
-                    Hoje
-                </button>
-
-                <button class="tab"
-                        id="btnSemana"
-                        onclick="mostrarSemana()">
-                    Semana
-                </button>
-
-                <button class="tab"
-                        id="btnPlanejamento"
-                        onclick="mostrarPlanejamento()">
-                    Planejamento
-                </button>
-
-            </div>
-            
-            <!-- ===================== -->
-            <!-- TELA HOJE -->
+<!-- ===================== -->
+<!-- TELA HOJE -->
             <!-- ===================== -->
 
             <div id="telaHoje">
@@ -574,544 +598,273 @@ body{
         <!-- TELA PLANEJAMENTO -->
         <!-- ===================== -->
 
-        <div id="telaPlanejamento"
-             style="display:none;">
-
-            <h3>Nova Atividade</h3>
-
-            <input
-                id="nomeProjeto"
-                class="campo"
-                placeholder="Nome">
-
-            <select
-                id="diaProjeto"
-                class="campo">
-
-                <option value="segunda">Segunda</option>
-                <option value="terca">Terça</option>
-                <option value="quarta">Quarta</option>
-                <option value="quinta">Quinta</option>
-                <option value="sexta">Sexta</option>
-                <option value="sabado">Sábado</option>
-                <option value="domingo">Domingo</option>
-
-            </select>
-
-            <input
-                id="tempoProjeto"
-                class="campo"
-                type="number"
-                placeholder="Minutos">
-
-            <button
-                class="btnAdicionar"
-                onclick="adicionarProjeto()">
-
-                Adicionar
-
-            </button>
-
+        <div id="telaMes" style="display:none;">
+    <div class="mesTopo">
+        <div>
+            <h2 id="tituloMes">Novembro 2026</h2>
+            <div class="dataHoje">capacidade real por dia</div>
         </div>
-
+        <div class="mesNavegacao">
+            <button onclick="mudarMes(-1)" aria-label="Mês anterior">‹</button>
+            <button onclick="mudarMes(1)" aria-label="Próximo mês">›</button>
+        </div>
     </div>
+    <div class="resumoMes" id="resumoMes"></div>
+    <div class="calendario" id="calendario"></div>
+    <div class="analiseDia" id="analiseDia">
+        <div class="mensagemVazia">Clique em um dia do calendário para ver a análise da Aurora.</div>
+    </div>
+</div>
+
+<div id="telaPlanejamento" style="display:none;">
+    <div class="blocoPlanejamento">
+        <h3>Meu trabalho</h3>
+        <p class="subtitulo">O trabalho entra na capacidade automaticamente.</p>
+        <div class="configGrid">
+            <input id="trabalhoOque" class="campo" placeholder="Você trabalha com o quê?" value="Controladoria">
+            <select id="trabalhoModelo" class="campo">
+                <option value="remoto">Remoto</option><option value="hibrido" selected>Híbrido</option><option value="presencial">Presencial</option>
+            </select>
+            <input id="trabalhoHoras" class="campo" type="number" min="0" step="0.5" value="8" placeholder="Horas de trabalho/dia">
+            <input id="trabalhoAlmoco" class="campo" type="number" min="0" step="0.25" value="1" placeholder="Pausa para almoço (h)">
+        </div>
+        <div class="diasFixos" id="diasTrabalho">
+            <label><input type="checkbox" value="1" checked> Seg</label><label><input type="checkbox" value="2" checked> Ter</label><label><input type="checkbox" value="3" checked> Qua</label><label><input type="checkbox" value="4" checked> Qui</label><label><input type="checkbox" value="5" checked> Sex</label><label><input type="checkbox" value="6"> Sáb</label><label><input type="checkbox" value="0"> Dom</label>
+        </div>
+        <div id="campoDeslocamento" class="configGrid">
+            <input id="deslocamentoIda" class="campo" type="number" min="0" step="0.25" value="0.75" placeholder="Ida (h)">
+            <input id="deslocamentoVolta" class="campo" type="number" min="0" step="0.25" value="0.75" placeholder="Volta (h)">
+        </div>
+        <button class="btnAdicionar" onclick="salvarTrabalho()">Salvar configuração do trabalho</button>
+        <div class="avisoFixo">🔒 Trabalho é fixo na rotina. Para alterar depois, a Aurora poderá ajudar pela IA.</div>
+    </div>
+    <div class="blocoPlanejamento">
+        <h3>Nova atividade</h3><p class="subtitulo">Escolha uma data ou faça a atividade se repetir toda semana.</p>
+        <input id="nomeProjeto" class="campo" placeholder="Nome da atividade">
+        <div class="configGrid"><div><label class="rotulo">Data</label><input id="dataProjeto" class="campo" type="date"></div><div><label class="rotulo">Dia da semana</label><select id="diaProjeto" class="campo"><option value="segunda">Segunda</option><option value="terca">Terça</option><option value="quarta">Quarta</option><option value="quinta">Quinta</option><option value="sexta">Sexta</option><option value="sabado">Sábado</option><option value="domingo">Domingo</option></select></div></div>
+        <div class="configGrid"><input id="tempoHoras" class="campo" type="number" min="0" value="0" placeholder="Horas"><input id="tempoMinutos" class="campo" type="number" min="0" max="59" step="5" value="0" placeholder="Minutos"></div>
+        <label class="checkFixo"><input id="atividadeFixa" type="checkbox"> <span>Fixa semanal — repetir automaticamente neste dia</span></label>
+        <button class="btnAdicionar" onclick="adicionarProjeto()">Adicionar atividade</button>
+    </div>
+</div>
+
+</div>
 
 </div>
 
 <script>
+// ==========================================
+// AURORA — NÚCLEO
+// ==========================================
+let tempoRestante = 0;
+let intervalo = null;
+let timerRodando = false;
+let atividadeAtual = null;
+let dataMesAtual = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+
+const diasSemana = ["domingo","segunda","terca","quarta","quinta","sexta","sabado"];
+const nomesDias = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+// Dados das atividades planejadas
+let atividades = JSON.parse(localStorage.getItem("auroraAtividades") || "[]");
+
+function salvarAtividades(){
+    localStorage.setItem("auroraAtividades", JSON.stringify(atividades));
+}
+
+function formatarHoras(minutos){
+    minutos = Math.max(0, Math.round(Number(minutos) || 0));
+    const h = Math.floor(minutos / 60);
+    const m = minutos % 60;
+    if(h === 0) return `${m}min`;
+    if(m === 0) return `${h}h`;
+    return `${h}h ${m}min`;
+}
+
+function formatarDataISO(data){
+    const y = data.getFullYear();
+    const m = String(data.getMonth()+1).padStart(2,"0");
+    const d = String(data.getDate()).padStart(2,"0");
+    return `${y}-${m}-${d}`;
+}
+
+function formatarDataBonita(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    const data = new Date(y,m-1,d);
+    return `${String(d).padStart(2,"0")}/${String(m).padStart(2,"0")}/${y}`;
+}
+
+function proximaDataDoDia(dia){
+    const mapa = {domingo:0,segunda:1,terca:2,quarta:3,quinta:4,sexta:5,sabado:6};
+    const alvo = mapa[dia];
+    if(alvo === undefined) return "";
+    const hoje = new Date();
+    const diferenca = (alvo - hoje.getDay() + 7) % 7;
+    const data = new Date(hoje.getFullYear(),hoje.getMonth(),hoje.getDate()+diferenca);
+    return formatarDataISO(data);
+}
+
+const manutencoes = {sono:480, alimentacao:45, banho:15, descanso:60};
+const trabalhoPadrao={nome:"Controladoria",modelo:"hibrido",horasDia:8,almocoHoras:1,dias:[1,2,3,4,5],deslocamentoIda:0,deslocamentoVolta:0};
+let trabalho=JSON.parse(localStorage.getItem("auroraTrabalho")||"null")||trabalhoPadrao;
+
+function salvarTrabalho(){
+ const dias=[...document.querySelectorAll('#diasTrabalho input:checked')].map(i=>Number(i.value));
+ const modelo=document.getElementById('trabalhoModelo').value;
+ trabalho={nome:document.getElementById('trabalhoOque').value.trim()||'Trabalho',modelo,horasDia:Number(document.getElementById('trabalhoHoras').value)||0,almocoHoras:Number(document.getElementById('trabalhoAlmoco').value)||0,dias,deslocamentoIda:modelo==='remoto'?0:Number(document.getElementById('deslocamentoIda').value)||0,deslocamentoVolta:modelo==='remoto'?0:Number(document.getElementById('deslocamentoVolta').value)||0};
+ localStorage.setItem('auroraTrabalho',JSON.stringify(trabalho)); renderizarSemana();renderizarMes();atualizarTelaHoje();renderizarCapacidade();alert('Trabalho configurado. Ele será considerado fixo na capacidade.');
+}
+function carregarTrabalho(){document.getElementById('trabalhoOque').value=trabalho.nome||'';document.getElementById('trabalhoModelo').value=trabalho.modelo||'hibrido';document.getElementById('trabalhoHoras').value=trabalho.horasDia;document.getElementById('trabalhoAlmoco').value=trabalho.almocoHoras;document.querySelectorAll('#diasTrabalho input').forEach(i=>i.checked=trabalho.dias.includes(Number(i.value)));document.getElementById('deslocamentoIda').value=trabalho.deslocamentoIda||0;document.getElementById('deslocamentoVolta').value=trabalho.deslocamentoVolta||0;}
+function atualizarCamposTrabalho(){document.getElementById('campoDeslocamento').style.display=document.getElementById('trabalhoModelo').value==='remoto'?'none':'grid';}
+function minutosTrabalho(){return Math.round((Number(trabalho.horasDia)+Number(trabalho.almocoHoras))*60);}
+function atividadeNaData(item,iso){if(item.fixa){const [y,m,d]=iso.split('-').map(Number);return diasSemana[new Date(y,m-1,d).getDay()]===item.dia;}if(item.data)return item.data===iso;return proximaDataDoDia(item.dia)===iso;}
+function eventosFixosData(iso){const [y,m,d]=iso.split('-').map(Number),data=new Date(y,m-1,d),dia=data.getDay(),eventos=[];if(trabalho.dias.includes(dia)){eventos.push({nome:`Trabalho — ${trabalho.nome}`,minutos:minutosTrabalho(),fixo:true});const desloc=Math.round((Number(trabalho.deslocamentoIda||0)+Number(trabalho.deslocamentoVolta||0))*60);if(desloc>0)eventos.push({nome:'Deslocamento',minutos:desloc,fixo:true});}return eventos;}
+function calcularRotinaDia(iso){const eventos=eventosFixosData(iso);let consumo=manutencoes.sono+manutencoes.alimentacao+manutencoes.banho+manutencoes.descanso;const detalhes=[["Sono",480],["Alimentação",45],["Banho",15],["Descanso",60]];eventos.forEach(e=>{consumo+=e.minutos;detalhes.push([e.nome,e.minutos]);});return {total:1440,consumo,capacidade:Math.max(0,1440-consumo),detalhes,fixos:eventos};}
+
+function calcularCapacidadeData(iso){
+    const rotina=calcularRotinaDia(iso);
+    const extras=atividades.filter(a=>atividadeNaData(a,iso));
+    const planejadoExtras=extras.reduce((s,a)=>s+Number(a.minutos||0),0);
+    const planejado=planejadoExtras;
+    const saldo=rotina.capacidade-planejado;
+    let status="livre", texto="DIA LEVE";
+    if(saldo<0){status="excesso";texto="SOBRECARGA";}
+    else if(saldo===0){status="lotado";texto="LOTADO";}
+    else if(saldo<=60){status="atencao";texto="QUASE CHEIO";}
+    return {iso, rotina, extras, planejado, saldo, status, texto};
+}
+
+function recomendacaoAurora(d){
+    if(d.status==="excesso"){
+        const excesso=Math.abs(d.saldo);
+        return `Você planejou ${formatarHoras(excesso)} além da sua capacidade real. Aurora recomenda mover uma atividade para outro dia e preservar seu descanso.`;
+    }
+    if(d.status==="lotado") return "Sua capacidade está totalmente ocupada. Depois das atividades, encerre o dia e descanse. Não é necessário preencher cada minuto disponível.";
+    if(d.status==="atencao") return `Restam apenas ${formatarHoras(d.saldo)}. Evite adicionar tarefas importantes; use o restante como margem e descanso.`;
+    return `Você tem ${formatarHoras(d.saldo)} de margem. Se quiser fazer algo, escolha uma prioridade e mantenha o restante como tempo livre.`;
+}
 
 // ==========================================
 // ABAS
 // ==========================================
+function ativarAba(id){
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    const btn=document.getElementById(id); if(btn) btn.classList.add("active");
+}
+function ocultarTelas(){
+    ["telaHoje","telaSemana","telaMes","telaPlanejamento"].forEach(id=>{
+        const el=document.getElementById(id); if(el) el.style.display="none";
+    });
+}
+function mostrarHoje(){ocultarTelas(); document.getElementById("telaHoje").style.display="block"; ativarAba("btnHoje"); atualizarTelaHoje();}
+function mostrarSemana(){ocultarTelas(); document.getElementById("telaSemana").style.display="block"; ativarAba("btnSemana"); renderizarSemana(); renderizarCapacidade();}
+function mostrarMes(){ocultarTelas(); document.getElementById("telaMes").style.display="block"; ativarAba("btnMes"); renderizarMes();}
+function mostrarPlanejamento(){ocultarTelas(); document.getElementById("telaPlanejamento").style.display="block"; ativarAba("btnPlanejamento");}
 
-let tempoRestante = 0;
-
-let intervalo = null;
-
-let timerRodando = false;
-
-let atividadeAtual = null;
-
+// ==========================================
+// HOJE + TIMER
+// ==========================================
 function atualizarTimer(){
-
-    const minutos =
-        Math.floor(
-            tempoRestante / 60
-        );
-
-    const segundos =
-        tempoRestante % 60;
-
-    document.getElementById(
-        "timer"
-    ).innerText =
-
-        `${String(minutos).padStart(2,"0")}:${String(segundos).padStart(2,"0")}`;
-
+    const min=Math.floor(Math.max(0,tempoRestante)/60); const seg=Math.max(0,tempoRestante)%60;
+    document.getElementById("timer").innerText=`${String(min).padStart(2,"0")}:${String(seg).padStart(2,"0")}`;
 }
-
 function iniciarTimer(){
-
-    if(!atividadeAtual){
-
-        alert(
-            "Nenhuma atividade para hoje."
-        );
-
-        return;
-    }
-
-    if(timerRodando){
-
-        clearInterval(intervalo);
-
-        timerRodando = false;
-
-        document.querySelector(".botao")
-            .innerText = "RETOMAR";
-
-        return;
-    }
-
-    timerRodando = true;
-
-    document.querySelector(".botao")
-        .innerText = "PARAR";
-
-    intervalo = setInterval(() => {
-
-        tempoRestante--;
-
-        atualizarTimer();
-
-        if(tempoRestante <= 0){
-
-            clearInterval(intervalo);
-
-            timerRodando = false;
-
-            document.querySelector(".botao")
-                .innerText =
-                "CONCLUÍDO ✓";
-
-            document.getElementById(
-                "timerStatus"
-            ).innerText =
-            "Atividade concluída";
-
-        }
-
+    if(!atividadeAtual){alert("Nenhuma atividade para hoje.");return;}
+    if(timerRodando){clearInterval(intervalo);timerRodando=false;document.querySelector(".botao").innerText="RETOMAR";return;}
+    timerRodando=true;document.querySelector(".botao").innerText="PARAR";
+    intervalo=setInterval(()=>{
+        tempoRestante--; atualizarTimer();
+        if(tempoRestante<=0){clearInterval(intervalo);timerRodando=false;document.querySelector(".botao").innerText="CONCLUÍDO ✓";document.getElementById("timerStatus").innerText="Atividade concluída";}
     },1000);
-
 }
-
-function mostrarHoje(){
-
-    telaHoje.style.display = "block";
-    telaSemana.style.display = "none";
-    telaPlanejamento.style.display = "none";
-
-}
-
 function obterDataAtual(){
-
-    const agora = new Date();
-
-    const dias = [
-        "Domingo",
-        "Segunda-feira",
-        "Terça-feira",
-        "Quarta-feira",
-        "Quinta-feira",
-        "Sexta-feira",
-        "Sábado"
-    ];
-
-    const meses = [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    ];
-
-    return `${dias[agora.getDay()]}, ${agora.getDate()} de ${meses[agora.getMonth()]}`;
-
+    const agora=new Date();
+    const dias=["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"];
+    return `${dias[agora.getDay()]}, ${agora.getDate()} de ${nomesMeses[agora.getMonth()]}`;
 }
-
-function mostrarSemana(){
-
-    telaHoje.style.display = "none";
-    telaSemana.style.display = "block";
-    telaPlanejamento.style.display = "none";
-
-}
-
-function mostrarPlanejamento(){
-
-    telaHoje.style.display = "none";
-    telaSemana.style.display = "none";
-    telaPlanejamento.style.display = "block";
-
-}
-
-// ==========================================
-// ATIVIDADES
-// ==========================================
-
-let atividades =
-JSON.parse(
-    localStorage.getItem("atividades")
-) || [];
-
-const manutencoes = {
-
-    sono: 480,
-
-    trabalho: 540,
-
-    alimentacao: 45,
-
-    banho: 15,
-
-    cabelo: 85,
-
-    academia: 90,
-
-    unha: 60,
-
-    descanso: 60
-
-};
-// ==========================================
-// ADICIONAR
-// ==========================================
-function calcularCapacidadeDia(){
-
-    let totalDia = 24 * 60;
-
-    let consumo = 0;
-
-    consumo += manutencoes.sono;
-    consumo += manutencoes.trabalho;
-    consumo += manutencoes.alimentacao;
-    consumo += manutencoes.banho;
-    consumo += manutencoes.descanso;
-
-    const sobra =
-        totalDia - consumo;
-
-    return {
-
-        totalDia,
-        consumo,
-        sobra
-
-    };
-
-}
-
-function adicionarProjeto(){
-
-    const nome =
-        document.getElementById(
-            "nomeProjeto"
-        ).value;
-
-    const dia =
-        document.getElementById(
-            "diaProjeto"
-        ).value;
-
-    const minutos =
-        document.getElementById(
-            "tempoProjeto"
-        ).value;
-
-    if(!nome){
-        return;
-    }
-
-    atividades.push({
-
-        nome,
-        dia,
-        minutos
-
-    });
-
-    localStorage.setItem(
-        "atividades",
-        JSON.stringify(
-            atividades
-        )
-    );
-
-    document.getElementById(
-        "nomeProjeto"
-    ).value = "";
-
-    document.getElementById(
-        "tempoProjeto"
-    ).value = "";
-
-    renderizarSemana();
-}
-
-// ==========================================
-// RENDERIZAR
-// ==========================================
-
-function renderizarSemana(){
-
-    const dias = [
-
-        "segunda",
-        "terca",
-        "quarta",
-        "quinta",
-        "sexta",
-        "sabado",
-        "domingo"
-
-    ];
-
-    dias.forEach(dia => {
-
-        const lista =
-            document.getElementById(
-                dia + "Lista"
-            );
-
-        lista.innerHTML = "";
-
-    });
-
-    atividades.forEach((item,index)=>{
-
-        const lista =
-
-        document.getElementById(
-            item.dia + "Lista"
-        );
-
-        lista.innerHTML += `
-
-            <div class="atividadeExtra">
-
-                ✅ ${item.nome}
-                (${item.minutos} min)
-
-                <button
-                onclick="removerProjeto(${index})">
-
-                    ✖
-
-                </button>
-
-            </div>
-
-        `;
-
-    });
-
-}
-
-function renderizarCapacidade(){
-
-   console.log("renderizarCapacidade executou"); 
-
-   const dados =
-        calcularCapacidadeDia();
-
-    document.getElementById(
-        "capacidadeResumo"
-    ).innerHTML = `
-
-        <div class="capacidadeItem">
-
-            <span>Sono</span>
-
-            <span>8h</span>
-
-        </div>
-
-        <div class="capacidadeItem">
-
-            <span>Trabalho</span>
-
-            <span>9h</span>
-
-        </div>
-
-        <div class="capacidadeItem">
-
-            <span>Alimentação</span>
-
-            <span>45min</span>
-
-        </div>
-
-        <div class="capacidadeItem">
-
-            <span>Banho</span>
-
-            <span>15min</span>
-
-        </div>
-
-        <div class="capacidadeItem">
-
-            <span>Descanso</span>
-
-            <span>1h</span>
-
-        </div>
-
-        <div class="capacidadeSobra">
-
-            Tempo produtivo:
-            ${Math.floor(dados.sobra/60)}h
-            ${dados.sobra%60}m
-
-        </div>
-
-    `;
-}
-
-// ==========================================
-// REMOVER
-// ==========================================
-
-function removerProjeto(index){
-
-    atividades.splice(index,1);
-
-    localStorage.setItem(
-        "atividades",
-        JSON.stringify(
-            atividades
-        )
-    );
-
-    renderizarSemana();
-    atualizarTelaHoje();
-
-}
-
-
-function obterDiaAtual(){
-
-    const dias = [
-
-        "domingo",
-        "segunda",
-        "terca",
-        "quarta",
-        "quinta",
-        "sexta",
-        "sabado"
-
-    ];
-
-    return dias[
-        new Date().getDay()
-    ];
-
-}
-
 function atualizarTelaHoje(){
-
-    const hoje =
-        obterDiaAtual();
-
-    const atividadesDoDia =
-
-        atividades.filter(
-
-            a => a.dia === hoje
-
-        );
-
-    const foco =
-
-        document.getElementById(
-            "objetivoPrincipal"
-        );
-
-    const lista =
-
-        document.getElementById(
-            "atividadesHoje"
-        );
-
-    lista.innerHTML = "";
-
-    if(atividadesDoDia.length === 0){
-
-        foco.innerText =
-        "Livre";
-
-        lista.innerHTML =
-        "<div class='itemHoje'>Nenhuma atividade planejada.</div>";
-
-        return;
-    }
-
-    atividadeAtual =
-        atividadesDoDia[0];
-
-    foco.innerText =
-        atividadeAtual.nome;
-
-    tempoRestante =
-        parseInt(
-            atividadeAtual.minutos
-        ) * 60;
-
-    atualizarTimer();
-
-    atividadesDoDia.forEach(item => {
-
-        lista.innerHTML += `
-
-            <div class="itemHoje">
-
-                ✅ ${item.nome}
-                (${item.minutos} min)
-
-            </div>
-
-        `;
-
-    });
-
+    const iso=formatarDataISO(new Date());
+    const d=calcularCapacidadeData(iso);
+    document.getElementById("tempoLivre").innerText=formatarHoras(d.saldo);
+    document.getElementById("tempoMeta").innerText=d.saldo<0?"dia acima da capacidade":"tempo disponível hoje";
+    const lista=document.getElementById("atividadesHoje"); lista.innerHTML="";
+    const todos=[...d.rotina.fixos.map(e=>({...e,fixo:true})),...d.extras];
+    if(todos.length===0){document.getElementById("objetivoPrincipal").innerText="Livre";lista.innerHTML="<div class='itemHoje'>Nenhuma atividade planejada.</div>";atividadeAtual=null;return;}
+    const primeira=d.extras[0]||d.rotina.fixos[0];
+    document.getElementById("objetivoPrincipal").innerText=primeira.nome;
+    if(d.extras[0]){atividadeAtual=d.extras[0];tempoRestante=Number(atividadeAtual.minutos||0)*60;atualizarTimer();}
+    todos.forEach(item=>lista.innerHTML+=`<div class="itemHoje">${item.fixo?"🏫":"✅"} ${item.nome} (${formatarHoras(item.minutos)})</div>`);
 }
 
 // ==========================================
+// SEMANA
+// ==========================================
+function adicionarProjeto(){const nome=document.getElementById('nomeProjeto').value.trim(),data=document.getElementById('dataProjeto').value,dia=document.getElementById('diaProjeto').value,horas=Number(document.getElementById('tempoHoras').value)||0,mins=Number(document.getElementById('tempoMinutos').value)||0,minutos=horas*60+mins,fixa=document.getElementById('atividadeFixa').checked;if(!nome||minutos<=0){alert('Informe o nome e uma duração válida.');return;}if(!fixa&&!data){alert('Para uma atividade variável, escolha a data.');return;}atividades.push({nome,dia,data:fixa?null:data,minutos,fixa});salvarAtividades();document.getElementById('nomeProjeto').value='';document.getElementById('dataProjeto').value='';document.getElementById('tempoHoras').value='0';document.getElementById('tempoMinutos').value='0';document.getElementById('atividadeFixa').checked=false;renderizarSemana();renderizarMes();atualizarTelaHoje();}
+function renderizarSemana(){const dias=diasSemana.slice(1);dias.forEach(dia=>{const lista=document.getElementById(dia+'Lista');if(lista)lista.innerHTML='';});atividades.forEach((item,index)=>{const lista=document.getElementById((item.dia||'')+'Lista');if(!lista)return;const data=item.data?` · ${formatarDataBonita(item.data)}`:'';lista.innerHTML+=`<div class="atividadeExtra">${item.fixa?'🔁':'✅'} ${item.nome} (${formatarHoras(item.minutos)})${item.fixa?' · fixa semanal':''}${data}<button onclick="removerProjeto(${index})">✖</button></div>`;});}
+function calcularCapacidadeDia(){return calcularCapacidadeData(formatarDataISO(new Date())).rotina;}
+function renderizarCapacidade(){
+    const d=calcularCapacidadeData(formatarDataISO(new Date()));
+    document.getElementById("capacidadeResumo").innerHTML=`
+      <div class="capacidadeItem"><span>Capacidade real</span><span>${formatarHoras(d.rotina.capacidade)}</span></div>
+      <div class="capacidadeItem"><span>Planejado</span><span>${formatarHoras(d.planejado)}</span></div>
+      <div class="capacidadeItem"><span>Saldo</span><span>${d.saldo<0?"-":""}${formatarHoras(Math.abs(d.saldo))}</span></div>
+      <div class="capacidadeSobra">${d.texto}</div>`;
+}
+function removerProjeto(index){atividades.splice(index,1);salvarAtividades();renderizarSemana();renderizarMes();atualizarTelaHoje();}
 
 // ==========================================
-
-renderizarSemana();
-
-document.getElementById(
-    "dataHoje"
-).innerText = obterDataAtual();
-
-atualizarTelaHoje();
-
-renderizarCapacidade();
+// MÊS
+// ==========================================
+function mudarMes(delta){dataMesAtual.setMonth(dataMesAtual.getMonth()+delta);renderizarMes();}
+function renderizarMes(){
+    const titulo=document.getElementById("tituloMes");
+    titulo.innerText=`${nomesMeses[dataMesAtual.getMonth()]} ${dataMesAtual.getFullYear()}`;
+    const calendario=document.getElementById("calendario"); calendario.innerHTML="";
+    nomesDias.forEach(d=>calendario.innerHTML+=`<div class="cabecalhoCalendario">${d}</div>`);
+    const primeiro=new Date(dataMesAtual.getFullYear(),dataMesAtual.getMonth(),1).getDay();
+    const ultimo=new Date(dataMesAtual.getFullYear(),dataMesAtual.getMonth()+1,0).getDate();
+    for(let i=0;i<primeiro;i++)calendario.innerHTML+=`<div class="diaCalendario vazio"></div>`;
+    let capacidadeTotal=0,planejadoTotal=0,criticos=0;
+    for(let dia=1;dia<=ultimo;dia++){
+        const data=new Date(dataMesAtual.getFullYear(),dataMesAtual.getMonth(),dia); const iso=formatarDataISO(data); const d=calcularCapacidadeData(iso);
+        capacidadeTotal+=d.rotina.capacidade;planejadoTotal+=d.planejado;if(d.saldo<=60)criticos++;
+        const hoje=iso===formatarDataISO(new Date());
+        const classe=d.status==="excesso"?"diaExcesso":d.status==="lotado"?"diaLotado":d.status==="atencao"?"diaAtencao":"diaLivre";
+        calendario.innerHTML+=`<div class="diaCalendario ${classe} ${hoje?"hoje":""}" onclick="mostrarAnaliseDia('${iso}')"><div class="numeroDia">${dia}</div><div class="statusDia">${d.status==="excesso"?"🔴":d.status==="lotado"?"🔴":d.status==="atencao"?"🟡":"🟢"}</div><div class="saldoDia">${d.saldo<0?"-":""}${formatarHoras(Math.abs(d.saldo))}</div></div>`;
+    }
+    const diasNoMes=ultimo; const saldoTotal=capacidadeTotal-planejadoTotal;
+    document.getElementById("resumoMes").innerHTML=`
+      <div class="cardResumoMes"><span>CAPACIDADE</span><strong>${formatarHoras(capacidadeTotal)}</strong></div>
+      <div class="cardResumoMes"><span>PLANEJADO</span><strong>${formatarHoras(planejadoTotal)}</strong></div>
+      <div class="cardResumoMes"><span>DISPONÍVEL</span><strong>${saldoTotal<0?"-":""}${formatarHoras(Math.abs(saldoTotal))}</strong></div>
+      <div class="cardResumoMes"><span>DIAS CRÍTICOS</span><strong>${criticos}/${diasNoMes}</strong></div>`;
+}
+function mostrarAnaliseDia(iso){
+    const d=calcularCapacidadeData(iso); const el=document.getElementById("analiseDia");
+    const sinal=d.saldo<0?"-":"";
+    const atividadesDia=[...d.rotina.fixos.map(e=>({...e,fixo:true})),...d.extras];
+    const lista=atividadesDia.length?atividadesDia.map(a=>`<div>${a.fixo?"🏫":"✅"} ${a.nome} — ${formatarHoras(a.minutos)}</div>`).join(""):"<div>Nenhuma atividade planejada.</div>";
+    el.innerHTML=`
+      <h3>${formatarDataBonita(iso)}</h3>
+      <div class="statusTexto">${d.status==="excesso"?"🔴":d.status==="lotado"?"🔴":d.status==="atencao"?"🟡":"🟢"} ${d.texto}</div>
+      <div class="analiseGrid">
+        <div class="analiseItem"><span>CAPACIDADE</span><strong>${formatarHoras(d.rotina.capacidade)}</strong></div>
+        <div class="analiseItem"><span>PLANEJADO</span><strong>${formatarHoras(d.planejado)}</strong></div>
+        <div class="analiseItem"><span>RESTANTE</span><strong>${sinal}${formatarHoras(Math.abs(d.saldo))}</strong></div>
+      </div>
+      <div class="listaAnalise">${lista}</div>
+      <div class="recomendacaoAurora">✦ Aurora: ${recomendacaoAurora(d)}</div>`;
+}
 
 // ==========================================
+// INICIALIZAÇÃO
 // ==========================================
-
+document.getElementById("dataHoje").innerText=obterDataAtual();
+carregarTrabalho();
+document.getElementById("trabalhoModelo").addEventListener("change", atualizarCamposTrabalho);
+atualizarCamposTrabalho();
+renderizarSemana();renderizarCapacidade();atualizarTelaHoje();renderizarMes();
 </script>
 
 </body>
