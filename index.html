@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <title>Aurora</title>
 <link rel="manifest" href="manifest.json">
@@ -417,10 +418,201 @@ body{
 @media(max-width:430px){.analiseGrid{grid-template-columns:1fr 1fr}.calendario{gap:4px}.cabecalhoCalendario{font-size:10px}.diaCalendario{min-height:64px;padding:6px}.numeroDia{font-size:14px}.saldoDia{font-size:9px}}
 
 .blocoPlanejamento{background:#efede9;border-radius:18px;padding:18px;margin-bottom:18px}.subtitulo{color:#777;font-size:13px;margin:6px 0 14px}.configGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.rotulo{display:block;font-size:12px;color:#777;margin:4px 0}.diasFixos{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.diasFixos label,.checkFixo{background:#fff;padding:9px 11px;border-radius:10px;font-size:13px;color:#555;cursor:pointer}.diasFixos input,.checkFixo input{margin-right:5px}.avisoFixo{font-size:12px;color:#777;margin-top:10px;line-height:1.5}.checkFixo{display:block;margin-top:10px}@media(max-width:480px){.configGrid{grid-template-columns:1fr}}
+
+/* ==============================
+   AURORA — OBJETIVOS INTELIGENTES
+   ============================== */
+.blocoObjetivos{background:#efede9;border-radius:18px;padding:18px;margin-bottom:18px}
+.blocoObjetivos h3{font-size:18px;font-weight:500}
+.blocoObjetivos .subtitulo{margin-bottom:14px}
+.objetivoForm{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.objetivoForm .campo.full{grid-column:1/-1}
+.objetivoForm textarea{resize:vertical;min-height:70px}
+.objetivoCards{display:flex;flex-direction:column;gap:12px}
+.objetivoCard{background:#fff;border-radius:16px;padding:15px;border:1px solid #ece9e5}
+.objetivoTopo{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.objetivoNome{font-weight:600;font-size:15px}
+.objetivoMeta{font-size:12px;color:#777;margin-top:6px;line-height:1.5}
+.objetivoPrazo{font-size:11px;padding:6px 8px;border-radius:9px;background:#f1efeb;white-space:nowrap}
+.objetivoPrazo.urgente{background:#f7e6e6;color:#8b2020}
+.objetivoPrazo.atencao{background:#faf6ec;color:#8a6815}
+.objetivoPrazo.ok{background:#f3f7f2;color:#476341}
+.objetivoAnalise{margin-top:12px;padding:11px;border-radius:12px;background:#f8f7f5;font-size:12px;line-height:1.55;color:#555}
+.objetivoAnalise strong{color:#222}
+.objetivoAcoes{display:flex;gap:8px;margin-top:11px}
+.objetivoAcoes button{flex:1;border:0;border-radius:10px;padding:9px;cursor:pointer;font-size:12px}
+.btnPlanejarObjetivo{background:#17171c;color:#fff}
+.btnExcluirObjetivo{background:#efede9;color:#b21f2d}
+.sugestaoAurora{margin-top:10px;padding:12px;border-radius:12px;background:#17171c;color:#fff;font-size:12px;line-height:1.55}
+.objetivoVazio{padding:18px;text-align:center;color:#777;font-size:13px;background:#efede9;border-radius:16px}
+.badgePrioridade{font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:#777}
+@media(max-width:480px){.objetivoForm{grid-template-columns:1fr}.objetivoForm .campo.full{grid-column:auto}}
+
+/* ==============================
+   AURORA — TELA DE LOGIN
+   ============================== */
+
+.login-container{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px 20px;
+    background:var(--bg);
+}
+
+.login-card{
+    width:100%;
+    max-width:420px;
+    background:var(--card);
+    border-radius:40px;
+    padding:38px 32px;
+    box-shadow:
+        12px 12px 30px var(--shadow-dark),
+        -12px -12px 30px var(--shadow-light);
+}
+
+.login-logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.login-logo h1{
+    font-size:34px;
+    letter-spacing:5px;
+    font-weight:500;
+    color:var(--text);
+}
+
+.login-logo p{
+    margin-top:8px;
+    color:var(--sub);
+    font-size:14px;
+}
+
+.login-form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.login-form input{
+    width:100%;
+    border:none;
+    outline:none;
+    padding:14px 16px;
+    border-radius:15px;
+    background:#efede9;
+    color:#222;
+    font-size:14px;
+    box-shadow:
+        inset 2px 2px 5px #dedbd6,
+        inset -2px -2px 5px #ffffff;
+}
+
+.login-form input::placeholder{
+    color:#999;
+}
+
+.login-form input:focus{
+    box-shadow:
+        inset 2px 2px 5px #d8d5d0,
+        inset -2px -2px 5px #ffffff;
+}
+
+.login-form > button:first-of-type{
+    width:100%;
+    border:none;
+    border-radius:18px;
+    padding:14px;
+    margin-top:8px;
+    background:#17171c;
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.login-form > button:first-of-type:hover{
+    opacity:.9;
+}
+
+.btn-secundario{
+    width:100%;
+    border:none;
+    background:transparent;
+    color:#777;
+    font-size:13px;
+    padding:8px;
+    cursor:pointer;
+}
+
+.btn-secundario:hover{
+    color:#17171c;
+}
+
+#mensagemLogin{
+    text-align:center;
+    margin-top:8px;
+    font-size:13px;
+    color:#777;
+}
+
 </style>
 </head>
 
 <body>
+
+<!-- =============================== -->
+<!-- TELA DE LOGIN -->
+<!-- =============================== -->
+
+<div id="telaLogin" class="login-container">
+
+    <div class="login-card">
+
+        <div class="login-logo">
+            <h1>AURORA</h1>
+            <p>uma prioridade de cada vez</p>
+        </div>
+
+        <div class="login-form">
+
+            <input
+                id="emailLogin"
+                type="email"
+                placeholder="Seu e-mail"
+                autocomplete="email"
+            >
+
+            <input
+                id="senhaLogin"
+                type="password"
+                placeholder="Sua senha"
+                autocomplete="current-password"
+            >
+
+            <button onclick="entrarAurora()">
+                ENTRAR
+            </button>
+
+            <button class="btn-secundario" onclick="criarContaAurora()">
+                Criar minha conta
+            </button>
+
+            <div id="mensagemLogin"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =============================== -->
+<!-- AURORA -->
+<!-- =============================== -->
+
+<div id="appAurora" style="display:none;">
 
     <div class="container">
 
@@ -439,6 +631,7 @@ body{
     <button class="tab" id="btnSemana" onclick="mostrarSemana()">Semana</button>
     <button class="tab" id="btnMes" onclick="mostrarMes()">Mês</button>
     <button class="tab" id="btnPlanejamento" onclick="mostrarPlanejamento()">Planejamento</button>
+    <button class="tab" id="btnObjetivos" onclick="mostrarObjetivos()">Objetivos</button>
 </div>
 
 <!-- ===================== -->
@@ -496,7 +689,7 @@ body{
             <div class="foto">
 
                 <img
-                    src="Inglaterra.jpeg"
+                    src="fotos/Inglaterra.jpg"
                     alt="Memória do dia">
 
             </div>
@@ -616,6 +809,47 @@ body{
     </div>
 </div>
 
+
+<!-- ===================== -->
+<!-- TELA OBJETIVOS -->
+<!-- ===================== -->
+<div id="telaObjetivos" style="display:none;">
+    <div class="blocoObjetivos">
+        <h3>O que você precisa fazer?</h3>
+        <p class="subtitulo">Objetivos não precisam de hora marcada. A Aurora transforma sua intenção em tempo planejável.</p>
+
+        <div class="objetivoForm">
+            <input id="objetivoNome" class="campo full" placeholder="Ex.: Estudar para a FUVEST">
+            <input id="objetivoCategoria" class="campo" placeholder="Categoria (ex.: Estudos, Trabalho)">
+            <select id="objetivoPrioridade" class="campo">
+                <option value="3">Prioridade alta</option>
+                <option value="2" selected>Prioridade média</option>
+                <option value="1">Prioridade baixa</option>
+            </select>
+            <div>
+                <label class="rotulo">Tempo estimado total</label>
+                <div class="configGrid">
+                    <input id="objetivoHoras" class="campo" type="number" min="0" value="1" placeholder="Horas">
+                    <input id="objetivoMinutos" class="campo" type="number" min="0" max="59" step="5" value="0" placeholder="Minutos">
+                </div>
+            </div>
+            <div>
+                <label class="rotulo">Prazo (opcional)</label>
+                <input id="objetivoPrazo" class="campo" type="date">
+            </div>
+            <textarea id="objetivoObservacao" class="campo full" placeholder="Observação: o que precisa ser feito, matéria, conteúdo, etc."></textarea>
+        </div>
+
+        <button class="btnAdicionar" onclick="adicionarObjetivo()">Salvar objetivo</button>
+    </div>
+
+    <div class="blocoObjetivos">
+        <h3>Meus objetivos</h3>
+        <p class="subtitulo">A Aurora analisa prazo, prioridade, duração e capacidade antes de sugerir onde colocar cada objetivo.</p>
+        <div id="listaObjetivos" class="objetivoCards"></div>
+    </div>
+</div>
+
 <div id="telaPlanejamento" style="display:none;">
     <div class="blocoPlanejamento">
         <h3>Meu trabalho</h3>
@@ -656,6 +890,116 @@ body{
 // ==========================================
 // AURORA — NÚCLEO
 // ==========================================
+const SUPABASE_URL = "https://pkumxxcmrlvwyauuezdt.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_VLvfjOUM52FLvwraXJmStw_ecZ0OFcH";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+console.log("Aurora conectada ao Supabase:", supabaseClient);
+
+// ==========================================
+// AUTENTICAÇÃO
+// ==========================================
+
+async function criarContaAurora() {
+    const email = document.getElementById("emailLogin").value;
+    const senha = document.getElementById("senhaLogin").value;
+    const mensagem = document.getElementById("mensagemLogin");
+
+    if (!email || !senha) {
+        mensagem.textContent = "Preencha e-mail e senha.";
+        return;
+    }
+
+    if (senha.length < 6) {
+        mensagem.textContent = "A senha precisa ter pelo menos 6 caracteres.";
+        return;
+    }
+
+    mensagem.textContent = "Criando sua conta...";
+
+    const { error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: senha
+    });
+
+    if (error) {
+        mensagem.textContent = error.message;
+        return;
+    }
+
+    mensagem.textContent = "Conta criada! Verifique seu e-mail.";
+}
+
+async function entrarAurora() {
+    const email = document.getElementById("emailLogin").value;
+    const senha = document.getElementById("senhaLogin").value;
+    const mensagem = document.getElementById("mensagemLogin");
+
+    if (!email || !senha) {
+        mensagem.textContent = "Preencha e-mail e senha.";
+        return;
+    }
+
+    mensagem.textContent = "Entrando...";
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: senha
+    });
+
+    if (error) {
+        mensagem.textContent = "E-mail ou senha incorretos.";
+        return;
+    }
+
+    document.getElementById("telaLogin").style.display = "none";
+    document.getElementById("appAurora").style.display = "block";
+
+    mensagem.textContent = "";
+
+    console.log("Usuário conectado:", data.user.email);
+}
+
+// ==========================================
+// ATIVIDADES — SUPABASE
+// ==========================================
+
+async function salvarAtividadeSupabase(atividade) {
+    const {
+        data: { user }
+    } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+        console.error("Nenhum usuário conectado.");
+        return null;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("atividades")
+        .insert({
+            user_id: user.id,
+            nome: atividade.nome,
+            data: atividade.data,
+            minutos: atividade.minutos,
+            repetir: atividade.repetir
+        })
+        .select()
+        .single();
+
+    if (error) {
+        console.error("Erro ao salvar atividade:", error);
+        return null;
+    }
+
+    console.log("Atividade salva no Supabase:", data.nome);
+    
+    return data;
+}
+
 let tempoRestante = 0;
 let intervalo = null;
 let timerRodando = false;
@@ -668,6 +1012,224 @@ const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho
 
 // Dados das atividades planejadas
 let atividades = JSON.parse(localStorage.getItem("auroraAtividades") || "[]");
+let objetivos = JSON.parse(localStorage.getItem("auroraObjetivos") || "[]");
+
+function salvarObjetivos(){
+    localStorage.setItem("auroraObjetivos", JSON.stringify(objetivos));
+}
+
+function prioridadeTexto(n){
+    return Number(n)===3 ? "Alta" : Number(n)===2 ? "Média" : "Baixa";
+}
+
+function diasAtePrazo(iso){
+    if(!iso) return Infinity;
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const [y,m,d] = iso.split("-").map(Number);
+    const prazo = new Date(y,m-1,d); prazo.setHours(0,0,0,0);
+    return Math.ceil((prazo-hoje)/86400000);
+}
+
+function capacidadeDisponivelParaData(iso){
+    const d = calcularCapacidadeData(iso);
+    return Math.max(0, d.saldo);
+}
+
+/* A Aurora procura dias com capacidade suficiente.
+   Com prazo, ela favorece os dias mais próximos do prazo sem ultrapassar a capacidade.
+   Sem prazo, ela favorece os próximos dias mais livres, evitando concentrar tudo no mesmo dia. */
+function sugerirDiasObjetivo(obj){
+    const hoje = new Date(); hoje.setHours(0,0,0,0);
+    const diasBusca = [];
+    const limite = obj.prazo ? Math.min(Math.max(diasAtePrazo(obj.prazo)+1, 1), 60) : 21;
+    const duracao = Number(obj.minutos||0);
+
+    for(let i=0;i<limite;i++){
+        const data = new Date(hoje); data.setDate(hoje.getDate()+i);
+        const iso = formatarDataISO(data);
+        if(obj.prazo && iso > obj.prazo) continue;
+
+        const livre = capacidadeDisponivelParaData(iso);
+        if(livre >= duracao){
+            const diasPrazo = obj.prazo ? Math.max(0, diasAtePrazo(iso)) : 0;
+            const proximidade = obj.prazo ? (100 - Math.min(diasPrazo,100)) : 0;
+            const folga = Math.min(livre, 600);
+            const prioridadeBonus = Number(obj.prioridade||2) * 20;
+
+            // Prazo pesa bastante; prioridade aumenta a preferência.
+            const score = proximidade * 4 + prioridadeBonus + folga * 0.05 - i * 0.5;
+            diasBusca.push({iso,livre,score});
+        }
+    }
+
+    diasBusca.sort((a,b)=>b.score-a.score);
+    return diasBusca.slice(0,3);
+}
+
+function encontrarSugestaoObjetivo(obj){
+    const sugestoes = sugerirDiasObjetivo(obj);
+    if(!sugestoes.length) return null;
+    return sugestoes[0];
+}
+
+function adicionarObjetivo(){
+    const nome=document.getElementById("objetivoNome").value.trim();
+    const categoria=document.getElementById("objetivoCategoria").value.trim()||"Geral";
+    const prioridade=Number(document.getElementById("objetivoPrioridade").value)||2;
+    const horas=Number(document.getElementById("objetivoHoras").value)||0;
+    const mins=Number(document.getElementById("objetivoMinutos").value)||0;
+    const minutos=horas*60+mins;
+    const prazo=document.getElementById("objetivoPrazo").value;
+    const observacao=document.getElementById("objetivoObservacao").value.trim();
+
+    if(!nome || minutos<=0){
+        alert("Informe o objetivo e o tempo estimado.");
+        return;
+    }
+
+    objetivos.push({
+        id: Date.now(),
+        nome,categoria,prioridade,minutos,
+        prazo:prazo||null,
+        observacao,
+        criadoEm:formatarDataISO(new Date())
+    });
+
+    salvarObjetivos();
+    document.getElementById("objetivoNome").value="";
+    document.getElementById("objetivoCategoria").value="";
+    document.getElementById("objetivoHoras").value="1";
+    document.getElementById("objetivoMinutos").value="0";
+    document.getElementById("objetivoPrazo").value="";
+    document.getElementById("objetivoObservacao").value="";
+    renderizarObjetivos();
+}
+
+function adicionarObjetivoAoCalendario(id){
+    const obj=objetivos.find(o=>o.id===id);
+    if(!obj) return;
+
+    const sugestao=encontrarSugestaoObjetivo(obj);
+    if(!sugestao){
+        alert("A Aurora não encontrou, nos próximos dias, um espaço com capacidade suficiente para esse objetivo. Reduza a duração, aumente o horizonte ou reorganize suas atividades.");
+        return;
+    }
+
+    const data=new Date(sugestao.iso+"T12:00:00");
+    const dia=diasSemana[data.getDay()];
+
+    atividades.push({
+        nome:obj.nome,
+        dia,
+        data:sugestao.iso,
+        minutos:Number(obj.minutos),
+        fixa:false,
+        objetivoId:obj.id
+    });
+
+    obj.ultimaSugestao=sugestao.iso;
+    salvarAtividades();
+    salvarObjetivos();
+
+    renderizarObjetivos();
+    renderizarSemana();
+    renderizarMes();
+    renderizarCapacidade();
+    atualizarTelaHoje();
+
+    alert(`A Aurora reservou ${formatarHoras(obj.minutos)} para "${obj.nome}" em ${formatarDataBonita(sugestao.iso)}.`);
+}
+
+function excluirObjetivo(id){
+    objetivos=objetivos.filter(o=>o.id!==id);
+    salvarObjetivos();
+    renderizarObjetivos();
+}
+
+function textoPrazoObjetivo(obj){
+    if(!obj.prazo) return "Sem prazo";
+    const dias=diasAtePrazo(obj.prazo);
+    if(dias<0) return `Prazo vencido há ${Math.abs(dias)} dia(s)`;
+    if(dias===0) return "Prazo: hoje";
+    if(dias===1) return "Prazo: amanhã";
+    return `Prazo: ${formatarDataBonita(obj.prazo)} · ${dias} dias`;
+}
+
+function classePrazoObjetivo(obj){
+    if(!obj.prazo) return "ok";
+    const dias=diasAtePrazo(obj.prazo);
+    if(dias<=2) return "urgente";
+    if(dias<=7) return "atencao";
+    return "ok";
+}
+
+function gerarAnaliseObjetivo(obj){
+    const sugestoes=sugerirDiasObjetivo(obj);
+    const prioridade=prioridadeTexto(obj.prioridade);
+
+    if(!sugestoes.length){
+        return `<strong>⚠️ Atenção:</strong> não há um dia com ${formatarHoras(obj.minutos)} livres dentro do horizonte analisado. A Aurora recomenda quebrar o objetivo em blocos menores ou reorganizar o calendário.`;
+    }
+
+    const melhor=sugestoes[0];
+    const prazo=obj.prazo ? diasAtePrazo(obj.prazo) : null;
+    let motivo=`Prioridade ${prioridade.toLowerCase()} · ${formatarHoras(obj.minutos)} estimadas.`;
+
+    if(obj.prazo){
+        motivo += prazo<0
+            ? " O prazo já passou, então este objetivo recebe tratamento urgente."
+            : prazo<=3
+                ? " O prazo está próximo, então a urgência pesa fortemente na escolha."
+                : " O prazo foi considerado para evitar deixar a tarefa para depois.";
+    }else{
+        motivo += " Como não existe prazo, a Aurora procura um dia com boa folga sem transformar o objetivo em compromisso fixo.";
+    }
+
+    return `<strong>✦ Sugestão da Aurora:</strong> ${formatarDataBonita(melhor.iso)} · ${formatarHoras(melhor.livre)} livres antes de adicionar este objetivo.<br>${motivo}`;
+}
+
+function renderizarObjetivos(){
+    const lista=document.getElementById("listaObjetivos");
+    if(!lista) return;
+
+    if(!objetivos.length){
+        lista.innerHTML=`<div class="objetivoVazio">Você ainda não cadastrou objetivos.<br><br>Ex.: “Estudar para a FUVEST”, “Ler 3 capítulos”, “Fazer curso de Python”.</div>`;
+        return;
+    }
+
+    lista.innerHTML=objetivos.map(obj=>{
+        const classe=classePrazoObjetivo(obj);
+        const sugestao=encontrarSugestaoObjetivo(obj);
+        const agendado=obj.ultimaSugestao ? `Último agendamento: ${formatarDataBonita(obj.ultimaSugestao)}` : "Ainda não colocado no calendário";
+
+        return `<div class="objetivoCard">
+            <div class="objetivoTopo">
+                <div>
+                    <div class="objetivoNome">${obj.nome}</div>
+                    <div class="badgePrioridade">${prioridadeTexto(obj.prioridade)} · ${obj.categoria}</div>
+                </div>
+                <div class="objetivoPrazo ${classe}">${textoPrazoObjetivo(obj)}</div>
+            </div>
+
+            <div class="objetivoMeta">
+                ⏱ ${formatarHoras(obj.minutos)} · ${agendado}
+                ${obj.observacao?`<br>📝 ${obj.observacao}`:""}
+            </div>
+
+            <div class="objetivoAnalise">${gerarAnaliseObjetivo(obj)}</div>
+
+            <div class="sugestaoAurora">
+                ${sugestao ? `A melhor opção encontrada é <strong>${formatarDataBonita(sugestao.iso)}</strong>. Isso reserva ${formatarHoras(obj.minutos)} sem ultrapassar a capacidade calculada.` : "A Aurora precisa de mais espaço no calendário para conseguir encaixar este objetivo."}
+            </div>
+
+            <div class="objetivoAcoes">
+                <button class="btnPlanejarObjetivo" onclick="adicionarObjetivoAoCalendario(${obj.id})">${obj.ultimaSugestao?"Replanejar":"Adicionar ao calendário"}</button>
+                <button class="btnExcluirObjetivo" onclick="excluirObjetivo(${obj.id})">Excluir</button>
+            </div>
+        </div>`;
+    }).join("");
+}
+
 
 function salvarAtividades(){
     localStorage.setItem("auroraAtividades", JSON.stringify(atividades));
@@ -753,7 +1315,7 @@ function ativarAba(id){
     const btn=document.getElementById(id); if(btn) btn.classList.add("active");
 }
 function ocultarTelas(){
-    ["telaHoje","telaSemana","telaMes","telaPlanejamento"].forEach(id=>{
+    ["telaHoje","telaSemana","telaMes","telaPlanejamento","telaObjetivos"].forEach(id=>{
         const el=document.getElementById(id); if(el) el.style.display="none";
     });
 }
@@ -761,6 +1323,7 @@ function mostrarHoje(){ocultarTelas(); document.getElementById("telaHoje").style
 function mostrarSemana(){ocultarTelas(); document.getElementById("telaSemana").style.display="block"; ativarAba("btnSemana"); renderizarSemana(); renderizarCapacidade();}
 function mostrarMes(){ocultarTelas(); document.getElementById("telaMes").style.display="block"; ativarAba("btnMes"); renderizarMes();}
 function mostrarPlanejamento(){ocultarTelas(); document.getElementById("telaPlanejamento").style.display="block"; ativarAba("btnPlanejamento");}
+function mostrarObjetivos(){ocultarTelas(); document.getElementById("telaObjetivos").style.display="block"; ativarAba("btnObjetivos"); renderizarObjetivos();}
 
 // ==========================================
 // HOJE + TIMER
@@ -800,8 +1363,95 @@ function atualizarTelaHoje(){
 // ==========================================
 // SEMANA
 // ==========================================
-function adicionarProjeto(){const nome=document.getElementById('nomeProjeto').value.trim(),data=document.getElementById('dataProjeto').value,dia=document.getElementById('diaProjeto').value,horas=Number(document.getElementById('tempoHoras').value)||0,mins=Number(document.getElementById('tempoMinutos').value)||0,minutos=horas*60+mins,fixa=document.getElementById('atividadeFixa').checked;if(!nome||minutos<=0){alert('Informe o nome e uma duração válida.');return;}if(!fixa&&!data){alert('Para uma atividade variável, escolha a data.');return;}atividades.push({nome,dia,data:fixa?null:data,minutos,fixa});salvarAtividades();document.getElementById('nomeProjeto').value='';document.getElementById('dataProjeto').value='';document.getElementById('tempoHoras').value='0';document.getElementById('tempoMinutos').value='0';document.getElementById('atividadeFixa').checked=false;renderizarSemana();renderizarMes();atualizarTelaHoje();}
-function renderizarSemana(){const dias=diasSemana.slice(1);dias.forEach(dia=>{const lista=document.getElementById(dia+'Lista');if(lista)lista.innerHTML='';});atividades.forEach((item,index)=>{const lista=document.getElementById((item.dia||'')+'Lista');if(!lista)return;const data=item.data?` · ${formatarDataBonita(item.data)}`:'';lista.innerHTML+=`<div class="atividadeExtra">${item.fixa?'🔁':'✅'} ${item.nome} (${formatarHoras(item.minutos)})${item.fixa?' · fixa semanal':''}${data}<button onclick="removerProjeto(${index})">✖</button></div>`;});}
+async function adicionarProjeto(){
+    const nome=document.getElementById('nomeProjeto').value.trim(),
+    data=document.getElementById('dataProjeto').value,
+    dia=document.getElementById('diaProjeto').value,
+    horas=Number(document.getElementById('tempoHoras').value)||0,
+    mins=Number(document.getElementById('tempoMinutos').value)||0,
+    minutos=horas*60+mins,
+    fixa=document.getElementById('atividadeFixa').checked;
+
+    if(!nome||minutos<=0){
+        alert('Informe o nome e uma duração válida.');
+        return;
+    }
+
+    if(!fixa&&!data){
+        alert('Para uma atividade variável, escolha a data.');
+        return;
+    }
+
+    const novaAtividade = {
+        nome,
+        dia,
+        data: fixa ? null : data,
+        minutos,
+        fixa
+    };
+
+    // Mantém a Aurora funcionando normalmente por enquanto
+    atividades.push(novaAtividade);
+    salvarAtividades();
+
+    // Salva também no Supabase
+    const atividadeSalva = await salvarAtividadeSupabase({
+        nome: novaAtividade.nome,
+        data: novaAtividade.data,
+        minutos: novaAtividade.minutos,
+        repetir: novaAtividade.fixa
+    });
+
+    if (atividadeSalva) {
+        novaAtividade.id = atividadeSalva.id;
+    }
+
+    document.getElementById('nomeProjeto').value='';
+    document.getElementById('dataProjeto').value='';
+    document.getElementById('tempoHoras').value='0';
+    document.getElementById('tempoMinutos').value='0';
+    document.getElementById('atividadeFixa').checked=false;
+
+    renderizarSemana();
+    renderizarMes();
+    atualizarTelaHoje();
+}
+
+function renderizarSemana(){
+    const dias = diasSemana.slice(1);
+
+    dias.forEach(dia => {
+        const lista = document.getElementById(dia + 'Lista');
+
+        if(lista){
+            lista.innerHTML = '';
+        }
+    });
+
+    atividades.forEach((item, index) => {
+        const lista = document.getElementById((item.dia || '') + 'Lista');
+
+        if(!lista){
+            return;
+        }
+
+        const data = item.data
+            ? ` · ${formatarDataBonita(item.data)}`
+            : '';
+
+        lista.innerHTML += `
+            <div class="atividadeExtra">
+                ${item.fixa ? '🔁' : '✅'}
+                ${item.nome}
+                (${formatarHoras(item.minutos)})
+                ${item.fixa ? ' · fixa semanal' : ''}
+                ${data}
+                <button onclick="removerProjeto(${index})">✖</button>
+            </div>
+        `;
+    });
+}
+
 function calcularCapacidadeDia(){return calcularCapacidadeData(formatarDataISO(new Date())).rotina;}
 function renderizarCapacidade(){
     const d=calcularCapacidadeData(formatarDataISO(new Date()));
@@ -811,7 +1461,33 @@ function renderizarCapacidade(){
       <div class="capacidadeItem"><span>Saldo</span><span>${d.saldo<0?"-":""}${formatarHoras(Math.abs(d.saldo))}</span></div>
       <div class="capacidadeSobra">${d.texto}</div>`;
 }
-function removerProjeto(index){atividades.splice(index,1);salvarAtividades();renderizarSemana();renderizarMes();atualizarTelaHoje();}
+async function removerProjeto(index){
+    const atividade = atividades[index];
+
+    if (!atividade) return;
+
+    if (atividade.id) {
+        const { error } = await supabaseClient
+            .from("atividades")
+            .delete()
+            .eq("id", atividade.id);
+
+        if (error) {
+            console.error("Erro ao excluir atividade do Supabase:", error);
+            alert("Não foi possível excluir a atividade do Supabase.");
+            return;
+        }
+
+        console.log("Atividade excluída do Supabase:", atividade.nome);
+    }
+
+    atividades.splice(index, 1);
+    salvarAtividades();
+
+    renderizarSemana();
+    renderizarMes();
+    atualizarTelaHoje();
+}
 
 // ==========================================
 // MÊS
@@ -864,7 +1540,7 @@ document.getElementById("dataHoje").innerText=obterDataAtual();
 carregarTrabalho();
 document.getElementById("trabalhoModelo").addEventListener("change", atualizarCamposTrabalho);
 atualizarCamposTrabalho();
-renderizarSemana();renderizarCapacidade();atualizarTelaHoje();renderizarMes();
+renderizarSemana();renderizarCapacidade();atualizarTelaHoje();renderizarMes();renderizarObjetivos();
 </script>
 
 </body>
