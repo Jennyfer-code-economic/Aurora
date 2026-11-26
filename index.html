@@ -958,6 +958,8 @@ async function entrarAurora() {
 
     document.getElementById("telaLogin").style.display = "none";
     document.getElementById("appAurora").style.display = "block";
+    
+    await carregarAtividadesSupabase();
 
     mensagem.textContent = "";
 
@@ -986,6 +988,7 @@ async function salvarAtividadeSupabase(atividade) {
             data: atividade.data,
             minutos: atividade.minutos,
             repetir: atividade.repetir
+            dia: atividade.dia
         })
         .select()
         .single();
@@ -998,6 +1001,45 @@ async function salvarAtividadeSupabase(atividade) {
     console.log("Atividade salva no Supabase:", data.nome);
     
     return data;
+}
+
+async function carregarAtividadesSupabase() {
+    const {
+        data: { user }
+    } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+        console.log("Nenhum usuário conectado.");
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("atividades")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("criado_em", { ascending: true });
+
+    if (error) {
+        console.error("Erro ao carregar atividades:", error);
+        return;
+    }
+
+    console.log("Atividades carregadas do Supabase:", data);
+
+    atividades = data.map(item => ({
+        id: item.id,
+        nome: item.nome,
+        data: item.data,
+        minutos: item.minutos,
+        fixa: item.repetir,
+        dia: item.dia || (item.data ? obterDiaSemana(item.data) : "")
+    }));
+
+    salvarAtividades();
+
+    renderizarSemana();
+    renderizarMes();
+    atualizarTelaHoje();
 }
 
 let tempoRestante = 0;
@@ -1400,6 +1442,7 @@ async function adicionarProjeto(){
         data: novaAtividade.data,
         minutos: novaAtividade.minutos,
         repetir: novaAtividade.fixa
+        dia: novaAtividade.dia
     });
 
     if (atividadeSalva) {
