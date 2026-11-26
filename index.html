@@ -704,7 +704,7 @@ body{
 
             <div class="info">
 
-                Sono: 7h20<br>
+                Sono: 8h00<br>
                 Tempo livre real: 2h10
 
             </div>
@@ -1482,6 +1482,45 @@ async function removerProjeto(index){
     }
 
     atividades.splice(index, 1);
+    salvarAtividades();
+
+    renderizarSemana();
+    renderizarMes();
+    atualizarTelaHoje();
+}
+
+async function carregarAtividadesSupabase() {
+    const {
+        data: { user }
+    } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+        console.log("Nenhum usuário conectado.");
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("atividades")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("criado_em", { ascending: true });
+
+    if (error) {
+        console.error("Erro ao carregar atividades:", error);
+        return;
+    }
+
+    console.log("Atividades carregadas do Supabase:", data);
+
+    atividades = data.map(item => ({
+        id: item.id,
+        nome: item.nome,
+        data: item.data,
+        minutos: item.minutos,
+        fixa: item.repetir,
+        dia: item.data ? obterDiaSemana(item.data) : ""
+    }));
+
     salvarAtividades();
 
     renderizarSemana();
