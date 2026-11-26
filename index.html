@@ -1032,7 +1032,13 @@ async function carregarAtividadesSupabase() {
         data: item.data,
         minutos: item.minutos,
         fixa: item.repetir,
-        dia: item.dia || (item.data ? obterDiaSemana(item.data) : "")
+        dia: item.dia || (
+            item.data
+                ? ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"][
+                    new Date(item.data + "T00:00:00").getDay()
+                ]
+                : ""
+        )
     }));
 
     salvarAtividades();
