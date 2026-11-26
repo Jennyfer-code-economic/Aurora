@@ -959,6 +959,8 @@ async function entrarAurora() {
     document.getElementById("telaLogin").style.display = "none";
     document.getElementById("appAurora").style.display = "block";
 
+    await carregarAtividadesSupabase();
+
     mensagem.textContent = "";
 
     console.log("Usuário conectado:", data.user.email);
