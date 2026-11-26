@@ -958,8 +958,6 @@ async function entrarAurora() {
 
     document.getElementById("telaLogin").style.display = "none";
     document.getElementById("appAurora").style.display = "block";
-    
-    await carregarAtividadesSupabase();
 
     mensagem.textContent = "";
 
@@ -987,7 +985,7 @@ async function salvarAtividadeSupabase(atividade) {
             nome: atividade.nome,
             data: atividade.data,
             minutos: atividade.minutos,
-            repetir: atividade.repetir
+            repetir: atividade.repetir,
             dia: atividade.dia
         })
         .select()
@@ -1441,7 +1439,7 @@ async function adicionarProjeto(){
         nome: novaAtividade.nome,
         data: novaAtividade.data,
         minutos: novaAtividade.minutos,
-        repetir: novaAtividade.fixa
+        repetir: novaAtividade.fixa,
         dia: novaAtividade.dia
     });
 
