@@ -1293,6 +1293,21 @@ function formatarDataISO(data){
     return `${y}-${m}-${d}`;
 }
 
+function obterDiaSemana(dataISO){
+    const data = new Date(dataISO + "T00:00:00");
+    const dias = [
+        "domingo",
+        "segunda",
+        "terca",
+        "quarta",
+        "quinta",
+        "sexta",
+        "sabado"
+    ];
+
+    return dias[data.getDay()];
+}
+
 function formatarDataBonita(iso){
     const [y,m,d] = iso.split("-").map(Number);
     const data = new Date(y,m-1,d);
